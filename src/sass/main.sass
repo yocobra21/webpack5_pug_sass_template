@@ -1,5 +1,20 @@
-@use '../blocks/blocks'
+@import '__fonts'
+@import '__variables'
 
-.red
-    color: red
+*,*::after,*::before
+    padding: 0
+    margin: 0
+    box-sizing: border-box
 
+body
+    font-size: 10px
+    font-family: $font-family
+    color: $text-color
+
+
+.container
+    width: 80%
+    margin: 0 auto
+
+
+@import '../blocks/blocks'
