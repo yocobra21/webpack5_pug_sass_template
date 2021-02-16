@@ -1,7 +1,17 @@
 const path = require("path");
+const fs = require("fs");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const webpack = require('webpack');
+
+const PATH = {
+  src: path.resolve(__dirname, "src"),
+  dist: path.resolve(__dirname, "dist"),
+};
+const PAGES_DIR = `${PATH.src}/pages`;
+const PAGES = fs
+  .readdirSync(PAGES_DIR)
+  .filter((fileName) => fileName.endsWith(".pug"));
+
 
 module.exports = {
   entry: {
@@ -19,7 +29,7 @@ module.exports = {
     open: true,
     compress: true,
     hot: true,
-    port: 8080,
+    port: 8081,
   },
   module: {
     rules: [
@@ -42,7 +52,17 @@ module.exports = {
         test: /\.(sass|css)$/,
         use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
       },
+      {
+        test: /\.pug$/,
+        use: ["pug-loader"],
+      },
     ],
   },
-  plugins: [new CleanWebpackPlugin(), new HtmlWebpackPlugin(),  new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new CleanWebpackPlugin(),
+    ...PAGES.map(page => new HtmlWebpackPlugin({
+      template: `${PAGES_DIR}/${page}`,
+      filename: `./${page.replace(/\.pug/,'.html')}`
+    }))
+  ],
 };
