@@ -1,4 +1,3 @@
-@import '__fonts'
 @import '__variables'
 
 *,*::after,*::before
@@ -6,11 +5,24 @@
     margin: 0
     box-sizing: border-box
 
+html
+    font-size: $body-font-size
+
 body
-    font-size: 10px
     font-family: $font-family
     color: $text-color
+    font-weight: 400
 
+h1, h2, h3
+    color: $headline-color
+    font-weight: 700
+
+h1
+    font-size: 2.4rem
+h2
+    font-size: 1.9rem
+h3
+    font-size: 1.2rem
 
 .container
     width: 80%
